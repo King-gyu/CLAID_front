@@ -63,18 +63,18 @@ async function postArticle() {
   // CKEditor 인스턴스를 가져옵니다.
   var content = CKEDITOR.instances.content.getData();
 
-  const article_image = document.getElementById("notice_article_image")
-    .files[0];
+  // const article_image = document.getElementById("notice_article_image")
+  //   .files[0];
 
   const formdata = new FormData();
 
   formdata.append("title", title);
   formdata.append("content", content);
-  if (article_image == undefined) {
-    formdata.append("article_image", "");
-  } else {
-    formdata.append("article_image", article_image);
-  }
+  // if (article_image == undefined) {
+  //   formdata.append("article_image", "");
+  // } else {
+  //   formdata.append("article_image", article_image);
+  // }
 
   if (title == "" || content == "") {
     alert("제목,내용은 필수");
@@ -172,116 +172,116 @@ async function pagination(callback) {
   // 작업이 완료되면, 콜백 함수가 존재할 경우에만 해당 코드를 실행
   if (callback) {
     const articles = await callback();
-  const rowsPerPage = 10; //한 페이지에 담을 개수
-  // const rows = await getArticles();
-  const rows = document.querySelectorAll('#ul_table .list_col')
-  // const rows = document.querySelectorAll('list_col')
-  const rowsCount = rows.length;
+    const rowsPerPage = 10; //한 페이지에 담을 개수
+    // const rows = await getArticles();
+    const rows = document.querySelectorAll('#ul_table .list_col')
+    // const rows = document.querySelectorAll('list_col')
+    const rowsCount = rows.length;
 
-  const pageCount = Math.ceil(rowsCount / rowsPerPage);//page 숫자 만들기 위한 계산 변수
-  const numbers = document.querySelector('#numbers');
+    const pageCount = Math.ceil(rowsCount / rowsPerPage);//page 숫자 만들기 위한 계산 변수
+    const numbers = document.querySelector('#numbers');
 
-  const prevPageBtn = document.querySelector('.pagination .prev')
-  const nextPageBtn = document.querySelector('.pagination .next')
-  //현재 보고있는 페이지그룹 번호
-  let pageActiveIdx = 0;
-  //현재 보고있는 페이지네이션 번호
-  let currentRageNum = 0;
-  //페이지그룹 최대 개수
-  let maxPageNum = 3;
-
-
-  //페이지 갯수에 따라 numbers에 html 생성
-  for (let i = 1; i <= pageCount; i++) {
-    numbers.innerHTML += `<li><a href="">${i}</a></li>`;
-  };
-  const numberBtn = numbers.querySelectorAll('a');
-
-  //페이지네이션 번호 감추기
-  for (nb of numberBtn) {
-    nb.style.display = 'none';
-  }
+    const prevPageBtn = document.querySelector('.pagination .prev')
+    const nextPageBtn = document.querySelector('.pagination .next')
+    //현재 보고있는 페이지그룹 번호
+    let pageActiveIdx = 0;
+    //현재 보고있는 페이지네이션 번호
+    let currentRageNum = 0;
+    //페이지그룹 최대 개수
+    let maxPageNum = 3;
 
 
-  //a(item)를 눌렀을때 할일
-  //몇번을 클릭했는지 알 수 있어야 함
-  numberBtn.forEach((item, index) => {
-    item.addEventListener('click', (e) => {
-      e.preventDefault();
-      //숫자를 넘겨주면 그 숫자가 보이게끔
-      displayRow(index);
-    });
-  });
+    //페이지 갯수에 따라 numbers에 html 생성
+    for (let i = 1; i <= pageCount; i++) {
+      numbers.innerHTML += `<li><a href="">${i}</a></li>`;
+    };
+    const numberBtn = numbers.querySelectorAll('a');
 
-  function displayRow(index) {
-    let start = index * rowsPerPage;
-    let end = start + rowsPerPage;
-    let rowsArray = [...rows];
-
-    for (ra of rowsArray) {
-      ra.style.display = 'none';
-    }
-
-    let newRows = rowsArray.slice(start, end);
-    for (nr of newRows) {
-      nr.style.display = "";
-    }
-
-    for (nb of numberBtn) {
-      nb.classList.remove('active');
-    }
-    numberBtn[index].classList.add('active');
-  }
-  displayRow(0);
-
-/**
- * 작성자: 공민영
- * 내용: 페이지네이션 그룹 표시 함수
- * 최초 작성일: 2023.06.29
- */
-  function displayPage(num) {
     //페이지네이션 번호 감추기
     for (nb of numberBtn) {
       nb.style.display = 'none';
     }
-    let totalpageCount = Math.ceil(pageCount / maxPageNum);
 
-    let pageArr = [...numberBtn];
-    let start = num * maxPageNum;
-    let end = num + maxPageNum;
-    let pageListArr = pageArr.slice(start, end);
 
-    for (let item of pageListArr) {
-      item.style.display = 'block';
+    //a(item)를 눌렀을때 할일
+    //몇번을 클릭했는지 알 수 있어야 함
+    numberBtn.forEach((item, index) => {
+      item.addEventListener('click', (e) => {
+        e.preventDefault();
+        //숫자를 넘겨주면 그 숫자가 보이게끔
+        displayRow(index);
+      });
+    });
+
+    function displayRow(index) {
+      let start = index * rowsPerPage;
+      let end = start + rowsPerPage;
+      let rowsArray = [...rows];
+
+      for (ra of rowsArray) {
+        ra.style.display = 'none';
+      }
+
+      let newRows = rowsArray.slice(start, end);
+      for (nr of newRows) {
+        nr.style.display = "";
+      }
+
+      for (nb of numberBtn) {
+        nb.classList.remove('active');
+      }
+      numberBtn[index].classList.add('active');
     }
+    displayRow(0);
 
-    if (pageActiveIdx == 0) {
-      prevPageBtn.style.display = 'none';
-    } else {
-      prevPageBtn.style.display = 'block';
+    /**
+     * 작성자: 공민영
+     * 내용: 페이지네이션 그룹 표시 함수
+     * 최초 작성일: 2023.06.29
+     */
+    function displayPage(num) {
+      //페이지네이션 번호 감추기
+      for (nb of numberBtn) {
+        nb.style.display = 'none';
+      }
+      let totalpageCount = Math.ceil(pageCount / maxPageNum);
+
+      let pageArr = [...numberBtn];
+      let start = num * maxPageNum;
+      let end = num + maxPageNum;
+      let pageListArr = pageArr.slice(start, end);
+
+      for (let item of pageListArr) {
+        item.style.display = 'block';
+      }
+
+      if (pageActiveIdx == 0) {
+        prevPageBtn.style.display = 'none';
+      } else {
+        prevPageBtn.style.display = 'block';
+      }
+
+      if (pageActiveIdx == totalpageCount - 1) {
+        nextPageBtn.style.display = 'none';
+      } else {
+        nextPageBtn.style.display = 'block';
+      }
+
     }
+    displayPage(0);
 
-    if (pageActiveIdx == totalpageCount - 1) {
-      nextPageBtn.style.display = 'none';
-    } else {
-      nextPageBtn.style.display = 'block';
-    }
+    nextPageBtn.addEventListener('click', () => {
+      let nextPageNum = pageActiveIdx * maxPageNum + maxPageNum;
+      displayRow(nextPageNum)
+      ++pageActiveIdx;
+      displayPage(pageActiveIdx);
+    })
 
+    prevPageBtn.addEventListener('click', () => {
+      let nextPageNum = pageActiveIdx * maxPageNum - maxPageNum;
+      displayRow(nextPageNum)
+      --pageActiveIdx;
+      displayPage(pageActiveIdx);
+    })
   }
-  displayPage(0);
-
-  nextPageBtn.addEventListener('click', () => {
-    let nextPageNum = pageActiveIdx * maxPageNum + maxPageNum;
-    displayRow(nextPageNum)
-    ++pageActiveIdx;
-    displayPage(pageActiveIdx);
-  })
-
-  prevPageBtn.addEventListener('click', () => {
-    let nextPageNum = pageActiveIdx * maxPageNum - maxPageNum;
-    displayRow(nextPageNum)
-    --pageActiveIdx;
-    displayPage(pageActiveIdx);
-  })
-}
 }

@@ -179,14 +179,14 @@ function saveEditedArticle(articleId) {
   const editedTitle = $("#edit_notice_title").val();
   // CKEditor 인스턴스를 가져옵니다.
   var editedContent = CKEDITOR.instances.edit_notice_content.getData();
-  const editedImage = $("#article_image").prop("files")[0];
+  // const editedImage = $("#article_image").prop("files")[0];
 
   const formdata = new FormData();
   formdata.append("title", editedTitle);
   formdata.append("content", editedContent);
-  if (editedImage !== undefined) {
-    formdata.append("article_image", editedImage);
-  }
+  // if (editedImage !== undefined) {
+  //   formdata.append("article_image", editedImage);
+  // }
 
   $.ajax({
     type: "PATCH",
